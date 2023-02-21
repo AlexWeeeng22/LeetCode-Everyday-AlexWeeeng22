@@ -1,0 +1,88 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        ListNode list1(0),list2(0);
+        ListNode *p = head, *p1 = &list1, *p2 = &list2;
+        while(p)
+        {
+            if(p->val < x)
+            {
+               p1->next = p;
+               p1 = p1->next;
+            }
+            else
+            {
+                p2->next = p;
+                p2 = p2->next;
+            }
+            p = p->next;
+        }
+        p1->next = list2.next;
+        p2->next = nullptr;
+        return list1.next;
+    }
+};
+
+
+
+
+
+////////////////////////////////////////
+
+
+Differences bewtween  "ListNode* p = head"  and "ListNode* p = &head"
+
+In a linked list, "head" refers to the first node of the list. "ListNode* p = head" creates a pointer "p" that points to the same memory location as "head". 
+In other words, "p" is a copy of the value stored in "head" and points to the first node of the list.
+
+On the other hand, "ListNode* p = &head" creates a pointer "p" that points to the memory address of "head". 
+In this case, "p" is a pointer to the variable "head" itself, rather than a pointer to the first node of the linked list.
+
+So, the main difference is that "ListNode* p = head" creates a pointer that points to the first node of the list, 
+while "ListNode* p = &head" creates a pointer that points to the variable that stores the first node of the list.
+
+
+Linked List:
++---+    +---+    +---+    +---+
+| 1 | ->    | 2 |  -> | 3 |  -> | 4 |
++---+    +---+    +---+    +---+
+   ^            |            |            |
+   |             v           v            v
+ head       n1        n2          n3
+
+Memory:
+  +------+------+------+------+------+------+------+------+
+  | head |  n1  |  n2  |  n3  |  n4  |      |      |      |
+  +------+------+------+------+------+------+------+------+
+
+  ListNode* p = head:
+  +------+------+------+------+------+------+------+------+
+  | head |  n1  |  n2  |  n3  |  n4  |      |      |      |
+  +------+------+------+------+------+------+------+------+
+       ^
+        |
+       p
+
+  ListNode* p = &head:
+  +------+------+------+------+------+------+------+------+
+  | head |  n1  |  n2  |  n3  |  n4  |      |      |      |
+  +------+------+------+------+------+------+------+------+
+  ^
+   |
+  p
+
+
+
+
+
+
