@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        if(k == nums.size()) return nums;
+        vector<int>  result;
+
+        unordered_map<int, int> counts;
+        for(int x : nums) counts[x] += 1;
+
+        auto cmp = [](pair<int, int>& a, pair<int, int>& b)
+        {
+            return a.second < b.second;
+        };
+        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> PQ(cmp);
+
+        for(pair p : counts) PQ.push(p);
+
+        for(int i = 0; i < k; ++i)
+        {
+            result.push_back(PQ.top().first);
+            PQ.pop();
+        }
+        return result;
+    }
+};
+
+#ANSWER PASTED FROM YOUTUBER
