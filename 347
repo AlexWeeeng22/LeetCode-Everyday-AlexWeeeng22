@@ -7,11 +7,17 @@ public:
         unordered_map<int, int> counts;
         for(int x : nums) counts[x] += 1;
 
+        /*简单来说，这段代码定义了一个可以按照 pair<int, int> 的第二个元素值从小到大排列的优先队列。*/
         auto cmp = [](pair<int, int>& a, pair<int, int>& b)
         {
             return a.second < b.second;
         };
         priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> PQ(cmp);
+        /*priority_queue 是一个 STL 容器适配器，它是基于堆（Heap）实现的。通过将 pair<int, int> 类型的元素加入到该队列中，
+        它们会按照 cmp lambda 表达式定义的方式进行排序，即按照第二个元素从小到大排序。在 priority_queue 内部，
+        每次插入新元素都会自动地根据元素的排序方式调整堆，使得堆的根节点（即队列中最高优先级的元素）始终是当前元素集合中的最小值。
+        因此，可以通过访问队列的根节点（通过 top() 函数）来获得当前队列中的最小值。
+        同时，还可以使用 push() 函数将新元素插入到队列中，并使用 pop() 函数弹出队列中的根节点。*/
 
         for(pair p : counts) PQ.push(p);
 
