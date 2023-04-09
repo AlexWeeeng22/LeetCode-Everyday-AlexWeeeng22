@@ -1,0 +1,40 @@
+class Solution {
+public:
+    string reorganizeString(string s) {
+        //count word frq in s
+        unordered_map<char, int> char_map;
+        for (char c : s) char_map[c]++;
+        
+        priority_queue<pair<int, char>> pq;
+        for (auto p : char_map) {
+            pq.push({p.second, p.first});
+        }
+
+        string res;
+        while (!pq.empty()) {
+            auto p1 = pq.top(); pq.pop();
+            if (!res.empty() && res.back() == p1.second) {
+                // if the last character in the result is the same as the current character,
+                // we need to pop the next item from the priority queue and swap them
+                if (pq.empty()) {
+                    // if there are no more items in the queue, it's impossible to form a valid string
+                    return "";
+                }
+                auto p2 = pq.top(); pq.pop();
+                res += p2.second;
+                p2.first--;
+                if (p2.first > 0) {
+                    pq.push(p2);
+                }
+                pq.push(p1);
+            } else {
+                res += p1.second;
+                p1.first--;
+                if (p1.first > 0) {
+                    pq.push(p1);
+                }
+            }
+        }
+        return res;
+    }
+};
